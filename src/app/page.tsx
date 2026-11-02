@@ -37,10 +37,10 @@ export default function Home() {
     <InfoSections id="get-help" title="You can ask for help without being defined by it." lede="RESET is not a clinic. We make the first step smaller: a private conversation with a trained peer, no diagnosis, no pressure, no sanctions—and a clear link to approved professional care when you are ready." sections={helpSections} after={<FaqSection />} photo={<HeroPhoto src="/images/life-park.jpeg" alt="Students relaxing and playing on a green field" caption="Recovery-friendly community" rotate={-4} />} />
     <InfoSections id="get-involved" title="Be the person someone can actually talk to." lede="RESET trains responsible peer advocates to identify concerns, listen safely within scope and refer appropriately—a frontline bridge to professional care, never a substitute for it. All activities operate under approved CDCC protocols." sections={involveSections} photo={<HeroPhoto src="/images/life-lecture.jpeg" alt="A student engaged in a lecture" caption="Peer advocates in training" rotate={6} />} />
     <AccordionGallery height={460} items={[
-      { image: 'https://picsum.photos/id/1015/900/1200', label: 'Phase 1 — Foundation (2026–2027)' },
-      { image: 'https://picsum.photos/id/1018/900/1200', label: 'Phase 2 — Campus Expansion (2027–2028)' },
-      { image: 'https://picsum.photos/id/1039/900/1200', label: 'Phase 3 — Nigeria Network (2028–2029)' },
-      { image: 'https://picsum.photos/id/1043/900/1200', label: 'Phase 4 — Africa & Global (2029–2030+)' },
+      { image: '/images/image1.webp', label: 'Phase 1 — Foundation (2026–2027)' },
+      { image: '/images/image2.webp', label: 'Phase 2 — Campus Expansion (2027–2028)' },
+      { image: '/images/image3.webp', label: 'Phase 3 — Nigeria Network (2028–2029)' },
+      { image: '/images/image4.webp', label: 'Phase 4 — Africa & Global (2029–2030+)' },
     ]} />
     <ContactSection />
     <SiteFooter />
