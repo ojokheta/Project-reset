@@ -2,11 +2,6 @@
 
 import { useState, type FormEvent } from 'react'
 
-/**
- * The `#contact` band of the continuous page — hero banner plus the
- * contact-layout form and "what happens next" aside. Messages are handled
- * client-side only; no data leaves the browser.
- */
 export function ContactSection() {
     const [sent, setSent] = useState(false)
 
@@ -14,6 +9,8 @@ export function ContactSection() {
         event.preventDefault()
         setSent(true)
     }
+
+    const inputClass = 'w-full rounded-xl border-none bg-neutral-100/70 px-4 py-3.5 text-[15px] text-neutral-900 placeholder-neutral-400 transition-all duration-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-black/5'
 
     return (
         <div id="contact" className="page-band">
@@ -28,77 +25,61 @@ export function ContactSection() {
 
             <section className="contact-layout" data-reveal="30">
                 {sent ? (
-                    <div className="sent" role="status">
-                        <h2>Thank you — your message is with the coordination desk.</h2>
-                        <p>
+                    <div className="rounded-2xl bg-neutral-50 p-10">
+                        <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">Thank you — your message is with the coordination desk.</h2>
+                        <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
                             Someone will reply from the RESET desk. If this is urgent, please
                             also use campus emergency channels or contact University Health
                             Services directly.
                         </p>
-                        <p>
-                            <button type="button" className="outline-button" onClick={() => setSent(false)}>
-                                Write another message
-                            </button>
-                        </p>
+                        <button type="button" className="mt-6 rounded-full bg-neutral-900 px-5 py-2.5 text-[14px] font-medium text-white transition hover:scale-[1.02]" onClick={() => setSent(false)}>
+                            Write another message
+                        </button>
                     </div>
                 ) : (
-                    <form onSubmit={onSubmit}>
-                        <label>
-                            Name
-                            <input name="name" autoComplete="name" placeholder="How should we address you?" required />
+                    <form onSubmit={onSubmit} className="rounded-2xl bg-neutral-50 p-8 sm:p-10 space-y-5">
+                        <div className="grid gap-5 sm:grid-cols-2">
+                            <label className="block">
+                                <span className="mb-2 block text-xs font-medium text-neutral-500">Name</span>
+                                <input name="name" autoComplete="name" placeholder="How should we address you?" required className={inputClass} />
+                            </label>
+                            <label className="block">
+                                <span className="mb-2 block text-xs font-medium text-neutral-500">Email</span>
+                                <input name="email" type="email" autoComplete="email" placeholder="you@example.com" required className={inputClass} />
+                            </label>
+                        </div>
+                        <label className="block">
+                            <span className="mb-2 block text-xs font-medium text-neutral-500">I am</span>
+                            <div className="relative">
+                                <select name="role" defaultValue="student" className={`${inputClass} appearance-none pr-10`}>
+                                    <option value="student">A student seeking support</option>
+                                    <option value="friend">A friend or peer</option>
+                                    <option value="volunteer">Interested in volunteering</option>
+                                    <option value="partner">An institutional partner</option>
+                                    <option value="press">Media or research enquiry</option>
+                                </select>
+                                <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400">▾</span>
+                            </div>
                         </label>
-                        <label>
-                            Email
-                            <input name="email" type="email" autoComplete="email" placeholder="you@example.com" required />
+                        <label className="block">
+                            <span className="mb-2 block text-xs font-medium text-neutral-500">Message</span>
+                            <textarea name="message" placeholder="Share as much or as little as you want. You do not have to identify anyone." required rows={5} className={`${inputClass} resize-none`} />
                         </label>
-                        <label>
-                            I am
-                            <select name="role" defaultValue="student">
-                                <option value="student">A student seeking support</option>
-                                <option value="friend">A friend or peer</option>
-                                <option value="volunteer">Interested in volunteering</option>
-                                <option value="partner">An institutional partner</option>
-                                <option value="press">Media or research enquiry</option>
-                            </select>
-                        </label>
-                        <label>
-                            Message
-                            <textarea
-                                name="message"
-                                placeholder="Share as much or as little as you want. You do not have to identify anyone."
-                                required
-                            />
-                        </label>
-                        <p className="note">
-                            Only what is necessary is collected, and it is handled through
-                            approved systems. Do not include medical details you would not
-                            want recorded. In an emergency, contact campus security or
-                            University Health Services directly.
+                        <p className="flex items-start gap-2 text-xs leading-relaxed text-neutral-400">
+                            <span aria-hidden="true">🔒</span>
+                            <span>Only what is necessary is collected, and it is handled through approved systems. Do not include medical details you would not want recorded. In an emergency, contact campus security or University Health Services directly.</span>
                         </p>
-                        <button className="primary-button" type="submit">Send message →</button>
+                        <button className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-6 py-3 text-[14px] font-medium text-white transition hover:scale-[1.02]" type="submit">Send secure message →</button>
                     </form>
                 )}
 
-                <aside>
-                    <h2>What happens next</h2>
-                    <ul>
-                        <li>
-                            Messages are read by the <strong>RESET coordination desk</strong>,
-                            not a public inbox.
-                        </li>
-                        <li>
-                            You hear back from a trained volunteer or lead —{' '}
-                            <strong>never auto-published, never shared onward</strong>.
-                        </li>
-                        <li>
-                            Where professional care is the right step, we make the{' '}
-                            <strong>introduction to CDCC or University Health Services</strong>{' '}
-                            rather than handling it ourselves.
-                        </li>
-                        <li>
-                            On campus: <strong>Career Development & Counselling Centre</strong>,
-                            Student Affairs Division, University of Ibadan.
-                        </li>
+                <aside className="rounded-2xl bg-neutral-50 p-8">
+                    <h2 className="text-xl font-semibold tracking-tight text-neutral-900">What happens next</h2>
+                    <ul className="mt-4 space-y-3 text-[15px] leading-relaxed text-neutral-500">
+                        <li>Messages are read by the <strong className="font-medium text-neutral-900">RESET coordination desk</strong>, not a public inbox.</li>
+                        <li>You hear back from a trained volunteer or lead — <strong className="font-medium text-neutral-900">never auto-published, never shared onward</strong>.</li>
+                        <li>Where professional care is the right step, we make the <strong className="font-medium text-neutral-900">introduction to CDCC or University Health Services</strong> rather than handling it ourselves.</li>
+                        <li>On campus: <strong className="font-medium text-neutral-900">Career Development & Counselling Centre</strong>, Student Affairs Division, University of Ibadan.</li>
                     </ul>
                 </aside>
             </section>
