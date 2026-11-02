@@ -93,15 +93,15 @@ h1 { font-size: clamp(28px, 4.4vw, 58px); line-height: 1.04; letter-spacing: -.0
 h1 em { font-style: normal; color: var(--brand-lime) }
 .hero h1 { white-space: nowrap }
 .hero-copy > p { font-size: 19px; line-height: 1.6; max-width: 470px; margin-bottom: 34px; color: var(--muted) }
-.hero-art { height: 430px; position: relative }
+.hero-art { height: 480px; position: relative }
 /* Lime sun sits on the vibrant end of the hero gradient, where green would vanish */
-.hero-girl { position: absolute; width: 350px; height: auto; right: 30px; top: 8px; filter: drop-shadow(0 0 46px rgba(163, 230, 53, .4)) }
+.hero-girl { position: absolute; height: 500px; width: auto; left: 50%; bottom: -12px; transform: translateX(-50%); filter: drop-shadow(0 0 46px rgba(163, 230, 53, .4)) }
 .orb { position: absolute; border-radius: 50% }
 .orb-one { background: var(--brand-deep); width: 170px; height: 170px; right: 250px; bottom: 12px; box-shadow: inset 0 0 0 1px rgba(163, 230, 53, .3) }
 .orb-two { background: #d7f2dd; width: 82px; height: 82px; right: 45px; bottom: 50px }
-.hero-card { position: absolute; right: 80px; bottom: 22px; width: 270px; padding: 26px; border-radius: 18px; background: var(--surface); color: var(--ink); box-shadow: 0 18px 45px rgba(0, 30, 18, .3); display: grid; gap: 14px }
-.hero-card span { color: var(--brand); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px }
-.hero-card strong { font-size: 24px; line-height: 1.05 }
+.hero-card { position: absolute; right: 26px; bottom: 26px; width: 235px; padding: 20px; border-radius: 18px; background: var(--surface); color: var(--ink); box-shadow: 0 18px 45px rgba(0, 30, 18, .3); display: grid; gap: 10px }
+.hero-card span { color: var(--brand); font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px }
+.hero-card strong { font-size: 19px; line-height: 1.08 }
 .hero-card small { color: var(--body-on-light) }
 
 /* ==========================================================================
@@ -314,10 +314,12 @@ h1 em { font-style: normal; color: var(--brand-lime) }
   .header .outline-button { border-color: rgba(255, 255, 255, .55); color: var(--white) }
   .header .outline-button:hover { background: rgba(255, 255, 255, .12); border-color: var(--brand-lime); color: var(--brand-lime) }
   .hero { grid-template-columns: 1fr; padding-top: 66px }
-  .hero-art { height: 290px; margin-top: 40px }
-  .hero-girl { width: 250px; right: 6px; top: 12px }
+  .hero-art { height: 440px; margin-top: 30px }
+  .hero-girl { height: 430px; bottom: 0 }
   .orb-one { right: 170px; width: 110px; height: 110px }
-  .hero-card { right: 20px; transform: scale(.85); transform-origin: bottom right }
+  .hero-card { right: 10px; bottom: 16px; width: 195px; padding: 14px; gap: 8px }
+  .hero-card strong { font-size: 16px }
+  .hero-card small { font-size: 10.5px }
   .card-grid, .resource-row, .statement { grid-template-columns: 1fr }
   .statement { gap: 45px }
   .about, .resources, .faq { padding: 82px 22px }
