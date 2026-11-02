@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -43,12 +43,14 @@ function MaskedWords({ text }: { text: string }) {
   return (
     <p className="mv-copy__body">
       {text.split(' ').map((word, i) => (
-        <span className="mv-word" key={i}>
-          <span className="mv-word__in" data-mv-word="">
-            {word}
+        <Fragment key={i}>
+          {i > 0 ? ' ' : ''}
+          <span className="mv-word">
+            <span className="mv-word__in" data-mv-word="">
+              {word}
+            </span>
           </span>
-          {i < text.split(' ').length - 1 ? ' ' : ''}
-        </span>
+        </Fragment>
       ))}
     </p>
   )
