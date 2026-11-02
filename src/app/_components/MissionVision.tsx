@@ -24,6 +24,7 @@ const BLOCKS = [
     title: 'MISSION',
     heading: 'Prevent, equip and connect',
     body: 'To prevent substance misuse, reduce stigma, equip young people with credible knowledge and life skills, create safe pathways to early help, strengthen peer support and connect affected students to appropriate professional care — beginning at the University of Ibadan and expanding through partnerships across Nigeria, Africa and the world.',
+    img: '/images/mission-bg.jpeg',
     flip: false,
   },
   {
@@ -32,6 +33,7 @@ const BLOCKS = [
     title: 'VISION',
     heading: 'Healthy, purposeful lives',
     body: 'To build a world where students and young people can choose healthy, purposeful lives free from the destructive effects of substance misuse and addiction — and where seeking help is met with dignity, confidentiality, compassion and practical support.',
+    img: '/images/vision-bg.jpeg',
     flip: true,
   },
 ]
@@ -65,6 +67,7 @@ export function MissionVision() {
         const title = block.querySelector('[data-mv-title]')
         const words = block.querySelectorAll('[data-mv-word]')
         const meta = block.querySelectorAll('[data-mv-meta]')
+        const bg = block.querySelector('[data-mv-bg]')
         if (!title || !words.length) return
 
         gsap
@@ -73,10 +76,14 @@ export function MissionVision() {
           })
           // oversized header rises in from below
           .fromTo(title, { yPercent: 42, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.7, ease: 'none' }, 0)
+          // photo background fades in with the header, drifting gently into place
+          .fromTo(bg, { autoAlpha: 0, scale: 1.08 }, { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'none' }, 0)
           // subtitle words unmask one by one
           .fromTo(words, { yPercent: 115 }, { yPercent: 0, duration: 1, ease: 'none', stagger: 0.35 / words.length }, 0.25)
           // kicker + heading follow
           .fromTo(meta, { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'none', stagger: 0.12 }, 0.35)
+          // photo background fades out again as the block releases its pin
+          .to(bg, { autoAlpha: 0, duration: 0.3, ease: 'none' }, 0.95)
       })
     }, root)
 
@@ -88,6 +95,7 @@ export function MissionVision() {
       {BLOCKS.map((block) => (
         <section className={`mv-block${block.flip ? ' mv-block--flip' : ''}`} data-mv-block="" key={block.id} aria-label={block.title}>
           <div className="mv-sticky">
+            <div className="mv-bg" style={{ backgroundImage: `url(${block.img})` }} data-mv-bg="" aria-hidden="true" />
             <div className="mv-row">
               <div className="mv-copy">
                 <span className="mv-kicker" data-mv-meta="">

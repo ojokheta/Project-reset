@@ -239,6 +239,13 @@ h1 em { font-style: normal; color: var(--brand-lime) }
    Interior routes — InfoPage (About / Purpose / Get help / Get involved)
    ========================================================================== */
 .inner-hero { padding: 110px max(28px, calc((100% - 1120px) / 2)) 90px; background: linear-gradient(130deg, var(--brand-deep), var(--brand)); color: var(--white) }
+/* hero variant carrying a floating polaroid photo — keep the headline clear of it */
+.inner-hero--photo { position: relative; overflow: hidden }
+.inner-hero--photo h1, .inner-hero--photo > p { max-width: min(680px, 100%) }
+.hero-photo { position: absolute; top: 34px; right: max(28px, calc((100% - 1120px) / 2)); width: 200px; margin: 0; padding: 9px 9px 24px; background: var(--white); border-radius: 10px; transform: rotate(4deg); box-shadow: 0 22px 44px rgba(3, 26, 12, .38); transition: transform .45s cubic-bezier(.34, 1.5, .5, 1), box-shadow .45s ease; z-index: 1 }
+.hero-photo:hover { transform: rotate(0deg) scale(1.07); box-shadow: 0 30px 60px rgba(3, 26, 12, .48) }
+.hero-photo img { width: 100%; height: 148px; object-fit: cover; border-radius: 5px }
+.hero-photo figcaption { margin-top: 8px; color: var(--body-on-light); font-size: 11px; font-weight: 600; letter-spacing: .3px; text-align: center }
 .inner-hero h1 { max-width: 940px; margin-bottom: 22px }
 .inner-hero h1 em { font-style: normal; color: var(--brand-lime) }
 .inner-hero > p { max-width: 700px; font-size: 19px; line-height: 1.6; color: var(--muted) }
@@ -258,6 +265,7 @@ h1 em { font-style: normal; color: var(--brand-lime) }
 .mv { background: var(--brand-deep); color: var(--white) }
 .mv-block { position: relative; height: 260vh }
 .mv-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; align-items: center; overflow: hidden }
+.mv-bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .16; pointer-events: none; will-change: transform, opacity }
 .mv-row { display: grid; grid-template-columns: 1fr 1.15fr; gap: 70px; align-items: center; width: 100%; max-width: 1120px; margin: auto; padding: 0 28px }
 .mv-copy { grid-column: 1; grid-row: 1; min-width: 0 }
 .mv-title { grid-column: 2; grid-row: 1; margin: 0; font-size: clamp(58px, 10.5vw, 148px); font-weight: 900; letter-spacing: -.04em; line-height: .92; color: var(--white); text-align: right }
@@ -293,6 +301,8 @@ h1 em { font-style: normal; color: var(--brand-lime) }
 @media (max-width: 760px) {
   .info-section, .contact-layout { grid-template-columns: 1fr; gap: 38px; padding-top: 65px; padding-bottom: 65px }
   .inner-hero { padding-top: 75px; padding-bottom: 65px }
+  .inner-hero--photo h1, .inner-hero--photo > p { max-width: none }
+  .hero-photo { display: none }
   .contact-layout { padding-bottom: 75px }
   /* mission/vision pin: stack title above the copy, keep the scrub reveal */
   .mv-block { height: 220vh }

@@ -23,6 +23,10 @@ const stopAnime = (anim: { pause?: () => void; revert?: () => void }) => {
  * - `[data-reveal]`             → fade + rise as the element enters the viewport
  * - `[data-reveal-pop="<from°>"]` → springy sticker pop (scale 0 → 1 with a
  *                                  rotation swing) for the footer banner graphics
+ *                                  and hero polaroids; grouped per closest
+ *                                  `[data-reveal-pop-root]`
+ * - `[data-fade-past]`            → scrubbed fade-out as the element nears the
+ *                                  top of the viewport (fades back on return)
  * - `[data-reveal-group]`        → children marked `[data-reveal-child]` stagger
  *                                  in (opacity only, so React Spring owns the
  *                                  transforms on interactive cards — no fighting
@@ -75,29 +79,46 @@ export function ScrollFx() {
       })
 
       // ── Sticker pops ───────────────────────────────────────────────────
-      // Footer banner graphics scale up from 0 with a rotation swing, staggered
-      // as the banner scrolls into view. Each attribute value is that sticker's
-      // starting rotation in degrees; its own CSS transform is the resting state
-      // GSAP animates back to.
+      // Graphics scale up from 0 with a rotation swing as their container
+      // scrolls into view. Pops are grouped by their closest
+      // `[data-reveal-pop-root]` so independent groups (footer banner, hero
+      // polaroids) each get their own trigger; a pop without an explicit root
+      // uses itself. Each attribute value is that sticker's starting rotation
+      // in degrees; its own CSS transform is the resting state GSAP animates
+      // back to.
       //
-      // The trigger is deliberately the *container* (`[data-reveal-pop-root]`),
-      // never the sticker itself: the from-tween scales the sticker to 0, which
-      // collapses its own ScrollTrigger rect to a point and makes the start
-      // position unreliable. The banner keeps a real box, so the trigger is stable.
-      const popEls = gsap.utils.toArray<HTMLElement>('[data-reveal-pop]')
-      if (popEls.length) {
-        const popRoot =
-          popEls[0].closest<HTMLElement>('[data-reveal-pop-root]') || popEls[0]
-        gsap.from(popEls, {
+      // The trigger is deliberately the *container*, never the sticker itself:
+      // the from-tween scales the sticker to 0, which collapses its own
+      // ScrollTrigger rect to a point and makes the start position unreliable.
+      const popGroups = new Map<HTMLElement, HTMLElement[]>()
+      gsap.utils.toArray<HTMLElement>('[data-reveal-pop]').forEach((el) => {
+        const root = el.closest<HTMLElement>('[data-reveal-pop-root]') || el
+        const group = popGroups.get(root)
+        if (group) group.push(el)
+        else popGroups.set(root, [el])
+      })
+      popGroups.forEach((els, root) => {
+        gsap.from(els, {
           scale: 0,
           rotate: (_i, target: HTMLElement) => Number(target.dataset.revealPop) || -18,
           autoAlpha: 0,
           duration: 0.85,
           ease: 'back.out(1.9)',
           stagger: 0.12,
-          scrollTrigger: { trigger: popRoot, start: 'top bottom', toggleActions: 'play none none none' },
+          scrollTrigger: { trigger: root, start: 'top bottom', toggleActions: 'play none none none' },
         })
-      }
+      })
+
+      // ── Fade-past ────────────────────────────────────────────────────────
+      // `[data-fade-past]` elements (polaroid photos) scrub to transparent as
+      // they approach the top of the viewport and fade back in on return.
+      gsap.utils.toArray<HTMLElement>('[data-fade-past]').forEach((el) => {
+        gsap.to(el, {
+          autoAlpha: 0,
+          ease: 'none',
+          scrollTrigger: { trigger: el, start: 'center 32%', end: 'bottom 8%', scrub: 0.5 },
+        })
+      })
 
       // ── Parallax ─────────────────────────────────────────────────────────
       gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach((el) => {
