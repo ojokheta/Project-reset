@@ -57,6 +57,8 @@
    ========================================================================== */
 * { box-sizing: border-box }
 html { scroll-behavior: smooth }
+/* hash jumps land below the fixed desktop pill nav */
+@media (min-width: 761px) { html { scroll-padding-top: 92px } }
 body { margin: 0; color: var(--ink); font-family: Arial, sans-serif; background: var(--white) }
 a { text-decoration: none; color: inherit }
 h1, h2, h3, p { margin-top: 0 }
@@ -93,7 +95,7 @@ h1 em { font-style: normal; color: var(--brand-lime) }
 .hero-copy > p { font-size: 19px; line-height: 1.6; max-width: 470px; margin-bottom: 34px; color: var(--muted) }
 .hero-art { height: 430px; position: relative }
 /* Lime sun sits on the vibrant end of the hero gradient, where green would vanish */
-.sun { position: absolute; background: var(--brand-lime); border-radius: 50%; width: 320px; height: 320px; right: 40px; top: 20px; box-shadow: 0 0 0 38px rgba(163, 230, 53, .14) }
+.hero-girl { position: absolute; width: 350px; height: auto; right: 30px; top: 8px; filter: drop-shadow(0 0 46px rgba(163, 230, 53, .4)) }
 .orb { position: absolute; border-radius: 50% }
 .orb-one { background: var(--brand-deep); width: 170px; height: 170px; right: 250px; bottom: 12px; box-shadow: inset 0 0 0 1px rgba(163, 230, 53, .3) }
 .orb-two { background: #d7f2dd; width: 82px; height: 82px; right: 45px; bottom: 50px }
@@ -313,7 +315,7 @@ h1 em { font-style: normal; color: var(--brand-lime) }
   .header .outline-button:hover { background: rgba(255, 255, 255, .12); border-color: var(--brand-lime); color: var(--brand-lime) }
   .hero { grid-template-columns: 1fr; padding-top: 66px }
   .hero-art { height: 290px; margin-top: 40px }
-  .sun { width: 230px; height: 230px; right: 10px }
+  .hero-girl { width: 250px; right: 6px; top: 12px }
   .orb-one { right: 170px; width: 110px; height: 110px }
   .hero-card { right: 20px; transform: scale(.85); transform-origin: bottom right }
   .card-grid, .resource-row, .statement { grid-template-columns: 1fr }
@@ -372,6 +374,7 @@ h1 em { font-style: normal; color: var(--brand-lime) }
 /* Active indicator = lime accent with deep-green label (brand requirement) */
 .topnav__links a.is-active { background: var(--brand-lime); color: var(--brand-deep); box-shadow: 0 6px 16px rgba(163, 230, 53, .45) }
 .topnav__cta { padding: 11px 18px; font-size: 13px }
+.topnav__cta.is-active { background: var(--brand-lime); border-color: var(--brand-lime); color: var(--brand-deep) }
 .topnav__cta svg { transition: transform .3s ease }
 .topnav__cta:hover svg { transform: scale(1.15) rotate(-6deg) }
 @media (min-width: 761px) { .topnav { display: block } .header { display: none } }

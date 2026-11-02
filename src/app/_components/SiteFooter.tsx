@@ -2,13 +2,12 @@ import type { ComponentType } from 'react'
 import { ArrowRight, Qr } from 'reicon-react'
 
 /**
- * Site footer — one shared footer for every route (Home, About, Purpose,
- * Get help, Get involved, Contact).
+ * Site footer — the shared footer of the single continuous page.
  *
  * Structure mirrors the reference layout: a deep brand-green container with a
- * multi-column grid of white pill tags + content, a meta row, and — at the very
- * bottom — a full-width two-tone wave banner (vibrant green under lime) carrying
- * the UI gate sticker and three secondary stickers.
+ * multi-column grid of plain column headers + content, a meta row, and — at
+ * the very bottom — a full-width two-tone wave banner (vibrant green under
+ * lime) carrying the UI gate sticker and three secondary stickers.
  *
  * Every sticker carries `data-reveal-pop="<from-rotation>"`, which ScrollFx
  * animates with GSAP + ScrollTrigger (springy scale/rotate pop as it scrolls
@@ -18,33 +17,32 @@ import { ArrowRight, Qr } from 'reicon-react'
 
 /** Column 2 — the same destinations as the top navigation. */
 const explore: [string, string][] = [
-  ['About', '/about'],
-  ['Purpose', '/purpose'],
-  ['Get help', '/help'],
-  ['Get involved', '/involve'],
-  ['Contact', '/contact'],
+  ['About', '#about'],
+  ['Purpose', '#purpose'],
+  ['Get help', '#get-help'],
+  ['Get involved', '#get-involved'],
+  ['Contact', '#contact'],
 ]
 
 /** Column 3 — approved support pathways (the three resource cards on Home). */
 const pathways: [string, string][] = [
-  ['RESET Connect', '/help'],
-  ['CDCC Counselling', '/help'],
-  ['University Health Services', '/help'],
+  ['RESET Connect', '#get-help'],
+  ['CDCC Counselling', '#get-help'],
+  ['University Health Services', '#get-help'],
 ]
 
 /**
  * Column 4 — social icons.
  *
- * NOTE: the site has no published social handles yet, so these are visual
- * placeholders. Swap each `href` for the real profile URL when it exists —
- * the icons and hover styling are already in place.
+ * All three open in a new tab; `rel="noopener noreferrer"` closes the opener
+ * reference. WhatsApp goes straight to Godswill's direct line.
  */
 type SocialIcon = ComponentType<{ size?: number; className?: string }>
 
 const socials: { label: string; href: string; Icon: SocialIcon }[] = [
-  { label: 'Instagram', href: '#', Icon: InstagramIcon },
-  { label: 'TikTok', href: '#', Icon: TikTokIcon },
-  { label: 'WhatsApp', href: '#', Icon: WhatsAppIcon },
+  { label: 'Instagram', href: 'https://www.instagram.com/1projectreset?psln=MXhtMGV5Y2gxY2M2eQ==', Icon: InstagramIcon },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@1projectreset', Icon: TikTokIcon },
+  { label: 'WhatsApp', href: 'https://wa.me/2347047027605', Icon: WhatsAppIcon },
 ]
 
 /** Brand glyphs as inline SVGs (reicon-react ships no TikTok/WhatsApp marks). */
@@ -79,7 +77,7 @@ export function SiteFooter() {
         <div className="site-footer__grid">
           {/* ── brand ─────────────────────────────────────────────────── */}
           <div className="site-footer__col site-footer__brand">
-            <a className="logo" href="/">
+            <a className="logo" href="#top">
               PROJECT <strong>RE<span>S</span>ET</strong>
             </a>
             <p className="site-footer__blurb">
@@ -112,7 +110,7 @@ export function SiteFooter() {
                 </li>
               ))}
               <li>
-                <a href="/help" className="site-footer__qr">
+                <a href="#get-help" className="site-footer__qr">
                   <Qr size={15} strokeWidth={2} aria-hidden="true" />
                   QR-to-RESET
                 </a>
@@ -127,12 +125,12 @@ export function SiteFooter() {
               Messages go to the RESET coordination desk — private,
               non-judgmental, never posted publicly.
             </p>
-            <a className="primary-button site-footer__cta" href="/contact">
+            <a className="primary-button site-footer__cta" href="#contact">
               Talk to us <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
             </a>
             <div className="site-footer__social">
               {socials.map(({ label, href, Icon }) => (
-                <a key={label} href={href} aria-label={label} title={label}>
+                <a key={label} href={href} aria-label={label} title={label} target="_blank" rel="noopener noreferrer">
                   <Icon size={22} />
                 </a>
               ))}

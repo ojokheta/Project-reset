@@ -1,32 +1,33 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { Chat } from 'reicon-react'
+import { useActiveSection } from './useActiveSection'
 
 const LINKS = [
-  { href: '/about', label: 'About' },
-  { href: '/purpose', label: 'Purpose' },
-  { href: '/help', label: 'Get help' },
-  { href: '/involve', label: 'Get involved' },
-]
+  { id: 'about', label: 'About' },
+  { id: 'purpose', label: 'Purpose' },
+  { id: 'get-help', label: 'Get help' },
+  { id: 'get-involved', label: 'Get involved' },
+] as const
 
 /**
- * Desktop pill navigation.
+ * Desktop pill navigation for the single continuous page.
  *
  * - Fixed to the top, floating as a frosted "pill" (backdrop-blur) that stays
  *   persistent while scrolling; it condenses its shadow once you leave the top.
+ * - Links are same-page hash anchors (`#about`, …); the browser smooth-scrolls
+ *   (`scroll-behavior: smooth` on <html>) and `scroll-padding-top` clears the
+ *   fixed bar. The active link is driven by the shared `useActiveSection`
+ *   scroll-spy, so it updates instantly as the user scrolls either direction.
  * - The sequential intro (brand → links → CTA) is pure CSS driven by the `--i`
  *   index on each `[data-intro]` child, so it works before hydration and can
  *   never leave the nav invisible if JavaScript fails.
- * - Hidden below 761px, where the floating bottom dock takes over; the page's
- *   legacy in-flow header is hidden at the same breakpoint, and `body` gains a
- *   top padding so nothing is clipped underneath the fixed bar.
+ * - Hidden below 761px, where the floating bottom dock takes over.
  */
 export function TopNav() {
-  const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
+  const active = useActiveSection()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -38,40 +39,40 @@ export function TopNav() {
   return (
     <nav className={`topnav${scrolled ? ' is-scrolled' : ''}`} aria-label="Primary">
       <div className="topnav__pill">
-        <Link href="/" className="topnav__brand" data-intro style={{ '--i': 0 } as CSSProperties}>
+        <a href="#top" className="topnav__brand" data-intro style={{ '--i': 0 } as CSSProperties}>
           <span>PROJECT</span>
           <strong>
             RE<em>S</em>ET
           </strong>
-        </Link>
+        </a>
 
         <div className="topnav__links">
           {LINKS.map((link, i) => {
-            const active = pathname === link.href
+            const isActive = active === link.id
             return (
-              <Link
-                key={link.href}
-                href={link.href}
+              <a
+                key={link.id}
+                href={`#${link.id}`}
                 data-intro
                 style={{ '--i': i + 1 } as CSSProperties}
-                className={active ? 'is-active' : undefined}
-                aria-current={active ? 'page' : undefined}
+                className={isActive ? 'is-active' : undefined}
+                aria-current={isActive ? 'true' : undefined}
               >
                 {link.label}
-              </Link>
+              </a>
             )
           })}
         </div>
 
-        <Link
-          href="/contact"
-          className="outline-button topnav__cta"
+        <a
+          href="#contact"
+          className={`outline-button topnav__cta${active === 'contact' ? ' is-active' : ''}`}
           data-intro
           style={{ '--i': LINKS.length + 1 } as CSSProperties}
         >
           Talk to us
           <Chat size={16} strokeWidth={1.8} aria-hidden="true" />
-        </Link>
+        </a>
       </div>
     </nav>
   )

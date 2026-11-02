@@ -1,14 +1,13 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
-import { SiteFooter } from '../_components/SiteFooter'
 
 /**
- * Contact — themed with the same emerald brand system as the rest of the site
- * (inner-hero gradient, .contact-layout form + aside, .sent confirmation).
- * Messages are handled client-side only; no data leaves the browser.
+ * The `#contact` band of the continuous page — hero banner plus the
+ * contact-layout form and "what happens next" aside. Messages are handled
+ * client-side only; no data leaves the browser.
  */
-export default function ContactPage() {
+export function ContactSection() {
     const [sent, setSent] = useState(false)
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -17,18 +16,7 @@ export default function ContactPage() {
     }
 
     return (
-        <main>
-            <header className="header">
-                <a className="logo" href="/">PROJECT <strong>RE<span>S</span>ET</strong></a>
-                <nav>
-                    <a href="/about">About</a>
-                    <a href="/purpose">Purpose</a>
-                    <a href="/help">Get help</a>
-                    <a href="/involve">Get involved</a>
-                </nav>
-                <a className="outline-button" href="/contact">Talk to us</a>
-            </header>
-
+        <div id="contact" className="page-band">
             <section className="inner-hero" data-reveal="30">
                 <h1>Write to us. <em>We treat it as private.</em></h1>
                 <p>
@@ -114,8 +102,6 @@ export default function ContactPage() {
                     </ul>
                 </aside>
             </section>
-
-            <SiteFooter />
-        </main>
+        </div>
     )
 }
