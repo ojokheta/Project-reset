@@ -82,8 +82,9 @@ export function MissionVision() {
           .fromTo(words, { yPercent: 115 }, { yPercent: 0, duration: 1, ease: 'none', stagger: 0.35 / words.length }, 0.25)
           // kicker + heading follow
           .fromTo(meta, { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'none', stagger: 0.12 }, 0.35)
-          // photo background fades out again as the block releases its pin
-          .to(bg, { autoAlpha: 0, duration: 0.3, ease: 'none' }, 0.95)
+          // photo background holds until the words have fully settled, then
+          // fades out only in the final stretch as the block releases its pin
+          .to(bg, { autoAlpha: 0, duration: 0.25, ease: 'none' }, 1.35)
       })
     }, root)
 

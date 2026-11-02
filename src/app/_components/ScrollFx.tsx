@@ -25,8 +25,6 @@ const stopAnime = (anim: { pause?: () => void; revert?: () => void }) => {
  *                                  rotation swing) for the footer banner graphics
  *                                  and hero polaroids; grouped per closest
  *                                  `[data-reveal-pop-root]`
- * - `[data-fade-past]`            → scrubbed fade-out as the element nears the
- *                                  top of the viewport (fades back on return)
  * - `[data-reveal-group]`        → children marked `[data-reveal-child]` stagger
  *                                  in (opacity only, so React Spring owns the
  *                                  transforms on interactive cards — no fighting
@@ -106,17 +104,6 @@ export function ScrollFx() {
           ease: 'back.out(1.9)',
           stagger: 0.12,
           scrollTrigger: { trigger: root, start: 'top bottom', toggleActions: 'play none none none' },
-        })
-      })
-
-      // ── Fade-past ────────────────────────────────────────────────────────
-      // `[data-fade-past]` elements (polaroid photos) scrub to transparent as
-      // they approach the top of the viewport and fade back in on return.
-      gsap.utils.toArray<HTMLElement>('[data-fade-past]').forEach((el) => {
-        gsap.to(el, {
-          autoAlpha: 0,
-          ease: 'none',
-          scrollTrigger: { trigger: el, start: 'center 32%', end: 'bottom 8%', scrub: 0.5 },
         })
       })
 
