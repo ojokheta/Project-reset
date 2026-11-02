@@ -72,6 +72,18 @@ img, svg { display: block }
 .logo strong { display: block; font-size: 24px; letter-spacing: 5px; line-height: .8 }
 /* The lime logo cut, set on a deep-green chip so it stays legible on white */
 .logo span, .logo strong span { color: var(--brand-lime); background: var(--brand-deep); padding: 1px 4px; border-radius: 4px }
+/* Official wordmark artwork (public/images/logo.jpeg) — the logo in the mobile
+   brand bar. The source is a 16:9 tile whose lock-up sits in a narrow band
+   (text measured at x160–2426, y508–1092 of 2560×1438), so the box uses
+   object-fit: cover with a shifted object-position to trim the empty margins
+   and keep PROJECT / RESET legible at bar height. */
+.logo img { display: block; width: 120px; height: 56px; object-fit: cover; object-position: center 83%; border-radius: 10px }
+/* Official wordmark artwork (public/images/logo.jpeg) in the mobile brand bar.
+   The source is a 16:9 tile whose type sits in a narrow band with wide empty
+   margins above/below (text ≈ y508–1092 of 1438), so the box uses object-fit:
+   cover with a shifted object-position to trim that dead space — the lock-up
+   then reads at ~10px/16px cap height instead of ~7px. */
+.logo img { display: block; width: 120px; height: 56px; object-fit: cover; object-position: center 83%; border-radius: 10px }
 nav { display: flex; gap: 32px; font-size: 14px }
 .outline-button, .primary-button { display: inline-flex; align-items: center; gap: 12px; border: 0; border-radius: 999px; padding: 13px 23px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease, background .25s ease }
 .outline-button { border: 1px solid var(--brand); color: var(--brand); background: transparent }
@@ -376,10 +388,10 @@ h1 em { font-style: normal; color: var(--brand-lime) }
 .topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 70; display: none; padding: 14px 18px 0; pointer-events: none }
 .topnav__pill { pointer-events: auto; max-width: 1060px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 8px 9px 8px 20px; border-radius: 999px; background: rgba(255, 255, 255, .82); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); box-shadow: inset 0 0 0 1px rgba(10, 77, 35, .1), 0 10px 30px rgba(10, 77, 35, .12); transition: background .4s ease, box-shadow .4s ease }
 .topnav.is-scrolled .topnav__pill { background: rgba(255, 255, 255, .94); box-shadow: inset 0 0 0 1px rgba(10, 77, 35, .14), 0 16px 44px rgba(10, 77, 35, .18) }
-.topnav__brand { display: flex; flex-direction: column; line-height: .9; letter-spacing: 2.5px; font-size: 10px; font-weight: 800; color: var(--brand-deep); text-transform: uppercase }
-.topnav__brand strong { font-size: 19px; letter-spacing: 4px }
-/* The lime "S" cut in the wordmark, on a deep-green chip for contrast */
-.topnav__brand em { font-style: normal; color: var(--brand-lime); background: var(--brand-deep); padding: 1px 4px; border-radius: 4px }
+/* Same official wordmark artwork as .logo img — tighter box for the pill,
+   cropped the same way so PROJECT / RESET stays legible at pill height. */
+.topnav__brand { display: block; flex: 0 0 auto }
+.topnav__brand img { display: block; width: 130px; height: 46px; object-fit: cover; object-position: center 65%; border-radius: 8px }
 .topnav__links { display: flex; gap: 4px; margin-left: auto }
 .topnav__links a { position: relative; padding: 9px 15px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--ink); transition: color .25s ease, background .25s ease, transform .25s ease }
 .topnav__links a:hover { background: rgba(21, 128, 61, .1); color: var(--brand-deep); transform: translateY(-1px) }

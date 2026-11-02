@@ -39,11 +39,14 @@ export function TopNav() {
   return (
     <nav className={`topnav${scrolled ? ' is-scrolled' : ''}`} aria-label="Primary">
       <div className="topnav__pill">
-        <a href="#top" className="topnav__brand" data-intro style={{ '--i': 0 } as CSSProperties}>
-          <span>PROJECT</span>
-          <strong>
-            RE<em>S</em>ET
-          </strong>
+        <a
+          href="#top"
+          className="topnav__brand"
+          data-intro
+          style={{ '--i': 0 } as CSSProperties}
+          aria-label="Project RESET — back to top"
+        >
+          <img src="/images/logo.jpeg" alt="Project RESET" width={2560} height={1438} />
         </a>
 
         <div className="topnav__links">
