@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react'
-import { ArrowRight, Qr } from 'reicon-react'
+import { Qr } from 'reicon-react'
 
 /**
  * Site footer — the shared footer of the single continuous page.
@@ -125,9 +125,6 @@ export function SiteFooter() {
               Messages go to the RESET coordination desk — private,
               non-judgmental, never posted publicly.
             </p>
-            <a className="primary-button site-footer__cta" href="#contact">
-              Talk to us <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
-            </a>
             <div className="site-footer__social">
               {socials.map(({ label, href, Icon }) => (
                 <a key={label} href={href} aria-label={label} title={label} target="_blank" rel="noopener noreferrer">
