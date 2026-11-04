@@ -103,6 +103,11 @@ export function ScrollFx() {
           duration: 0.85,
           ease: 'back.out(1.9)',
           stagger: 0.12,
+          // Hand the element back to CSS when the pop lands. Without this GSAP
+          // keeps writing its own transform, and if it ever captured the
+          // collapsed from-state as the resting value the sticker finished at
+          // scale(0) — permanently invisible.
+          clearProps: 'all',
           scrollTrigger: { trigger: root, start: 'top bottom', toggleActions: 'play none none none' },
         })
       })
