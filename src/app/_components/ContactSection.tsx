@@ -2,6 +2,9 @@
 
 import { useState, type FormEvent } from 'react'
 
+/** Formspree endpoint. Also the form's `action`, so submissions still work with JS off. */
+const ENDPOINT = 'https://formspree.io/f/mjyylrvg'
+
 export function ContactSection() {
     const [sent, setSent] = useState(false)
     const [sending, setSending] = useState(false)
@@ -14,14 +17,18 @@ export function ContactSection() {
         setSending(true)
 
         try {
-            await fetch('https://formsubmit.co/ajax/1projectreset@gmail.com', {
+            // `Accept: application/json` is what makes Formspree answer with JSON
+            // instead of redirecting to its hosted thank-you page.
+            const response = await fetch(ENDPOINT, {
                 method: 'POST',
                 body: formData,
+                headers: { Accept: 'application/json' },
             })
+            if (!response.ok) throw new Error(`Formspree responded ${response.status}`)
             setSent(true)
             form.reset()
         } catch {
-            setSent(true)
+            // Leave the form open so the message isn't silently lost.
         } finally {
             setSending(false)
         }
@@ -54,7 +61,7 @@ export function ContactSection() {
                         </button>
                     </div>
                 ) : (
-                    <form onSubmit={onSubmit} className="rounded-2xl bg-neutral-50 p-8 sm:p-10 space-y-5">
+                    <form action={ENDPOINT} method="POST" onSubmit={onSubmit} className="rounded-2xl bg-neutral-50 p-8 sm:p-10 space-y-5">
                         <input type="hidden" name="_subject" value="Project RESET - New Message" />
                         <input type="hidden" name="_captcha" value="false" />
                         <div className="grid gap-5 sm:grid-cols-2">
@@ -70,7 +77,7 @@ export function ContactSection() {
                         <label className="block">
                             <span className="mb-2 block text-xs font-medium text-neutral-500">I am</span>
                             <div className="relative">
-                                <select name="role" defaultValue="student" className={`${inputClass} appearance-none pr-10`}>
+                                <select name="category" defaultValue="student" className={`${inputClass} appearance-none pr-10`}>
                                     <option value="student">A student seeking support</option>
                                     <option value="friend">A friend or peer</option>
                                     <option value="volunteer">Interested in volunteering</option>
