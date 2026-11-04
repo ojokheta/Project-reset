@@ -95,7 +95,7 @@ nav { display: flex; gap: 32px; font-size: 14px }
 /* ==========================================================================
    Home — hero
    ========================================================================== */
-.hero { min-height: 100svh; background: linear-gradient(120deg, var(--brand-deep), var(--brand)); color: var(--white); display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 80px max(28px, calc((100% - 1120px) / 2)); overflow: hidden }
+.hero { min-height: 100dvh; background: linear-gradient(120deg, var(--brand-deep), var(--brand)); color: var(--white); display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 80px max(28px, calc((100% - 1120px) / 2)); overflow: hidden }
 .hero-copy { max-width: 660px }
 /* Display type is sized so long headings resolve to two lines instead of three:
    tracking scales with the font (-.045em instead of a fixed -5px), the cap is
@@ -105,9 +105,9 @@ h1 { font-size: clamp(28px, 4.4vw, 58px); line-height: 1.04; letter-spacing: -.0
 h1 em { font-style: normal; color: var(--brand-lime) }
 .hero h1 { white-space: nowrap }
 .hero-copy > p { font-size: 19px; line-height: 1.6; max-width: 470px; margin-bottom: 34px; color: var(--muted) }
-.hero-art { height: 480px; position: relative; align-self: end }
+.hero-art { height: 480px; position: relative }
 /* Lime sun sits on the vibrant end of the hero gradient, where green would vanish */
-.hero-girl { position: absolute; height: 540px; width: auto; left: 50%; bottom: 0; transform: translateX(-50%); filter: drop-shadow(0 0 46px rgba(163, 230, 53, .4)) }
+.hero-girl { position: absolute; height: 500px; width: auto; left: 50%; bottom: -12px; transform: translateX(-50%); filter: drop-shadow(0 0 46px rgba(163, 230, 53, .4)) }
 .orb { position: absolute; border-radius: 50% }
 .orb-one { background: var(--brand-deep); width: 170px; height: 170px; right: 250px; bottom: 12px; box-shadow: inset 0 0 0 1px rgba(163, 230, 53, .3) }
 .orb-two { background: #d7f2dd; width: 82px; height: 82px; right: 45px; bottom: 50px }
