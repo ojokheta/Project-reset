@@ -95,7 +95,7 @@ nav { display: flex; gap: 32px; font-size: 14px }
 /* ==========================================================================
    Home — hero
    ========================================================================== */
-.hero { min-height: 660px; background: linear-gradient(120deg, var(--brand-deep), var(--brand)); color: var(--white); display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 80px max(28px, calc((100% - 1120px) / 2)); overflow: hidden }
+.hero { min-height: 100svh; background: linear-gradient(120deg, var(--brand-deep), var(--brand)); color: var(--white); display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 80px max(28px, calc((100% - 1120px) / 2)); overflow: hidden }
 .hero-copy { max-width: 660px }
 /* Display type is sized so long headings resolve to two lines instead of three:
    tracking scales with the font (-.045em instead of a fixed -5px), the cap is
