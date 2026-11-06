@@ -151,6 +151,22 @@ h1 em { font-style: normal; color: var(--brand-lime) }
 }
 
 /* ==========================================================================
+   Home — pillar cards (first band under the hero)
+   ========================================================================== */
+/* Full-bleed `--soft` field so the white cards read as cards; the padding
+   trick caps the content at the site's 1120px measure. */
+.pillars { background: var(--soft); padding: 74px max(28px, calc((100% - 1120px) / 2)) 84px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px }
+.pillar-card { padding: 26px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line-soft); box-shadow: 0 2px 8px rgba(10, 77, 35, .04); display: grid; align-content: start; gap: 11px; will-change: transform; transition: transform .35s cubic-bezier(.34, 1.5, .5, 1), box-shadow .35s ease, border-color .35s ease }
+.pillar-card:hover { transform: translateY(-6px); box-shadow: 0 18px 32px rgba(10, 77, 35, .14); border-color: rgba(21, 128, 61, .3) }
+.pillar-card i { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px; background: rgba(163, 230, 53, .2); color: var(--brand-deep); font-style: normal }
+.pillar-card h3 { margin: 0; font-size: 18px; letter-spacing: -.4px; color: var(--ink) }
+.pillar-card p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--body-on-light) }
+@media (max-width: 1024px) { .pillars { grid-template-columns: repeat(2, 1fr) } }
+@media (max-width: 700px) { .pillars { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 62px } }
+/* The lift still fires — it is the affordance — it just no longer travels. */
+@media (prefers-reduced-motion: reduce) { .pillar-card { transition: none } }
+
+/* ==========================================================================
    Home — about / cards / marquee band
    ========================================================================== */
 .about, .resources, .faq { max-width: 1120px; margin: auto; padding: 120px 28px; text-align: center }
