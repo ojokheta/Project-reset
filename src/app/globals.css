@@ -388,6 +388,7 @@ h1 em { font-style: normal; color: var(--brand-lime) }
    Desktop pill navigation
    ========================================================================== */
 @keyframes ui-in { from { opacity: 0; transform: translateY(-12px) } to { opacity: 1; transform: none } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(26px) } to { opacity: 1; transform: none } }
 .topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 70; display: none; padding: 14px 18px 0; pointer-events: none }
 .topnav__pill { pointer-events: auto; max-width: 1060px; margin: 0 auto; display: flex; align-items: center; gap: 22px; padding: 8px 9px 8px 20px; border-radius: 999px; background: rgba(255, 255, 255, .82); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); box-shadow: inset 0 0 0 1px rgba(10, 77, 35, .1), 0 10px 30px rgba(10, 77, 35, .12); transition: background .4s ease, box-shadow .4s ease }
 .topnav.is-scrolled .topnav__pill { background: rgba(255, 255, 255, .94); box-shadow: inset 0 0 0 1px rgba(10, 77, 35, .14), 0 16px 44px rgba(10, 77, 35, .18) }
@@ -405,7 +406,12 @@ h1 em { font-style: normal; color: var(--brand-lime) }
 .topnav__cta svg { transition: transform .3s ease }
 .topnav__cta:hover svg { transform: scale(1.15) rotate(-6deg) }
 @media (min-width: 761px) { .topnav { display: block } .header { display: none } }
-@media (prefers-reduced-motion: no-preference) { .topnav [data-intro], .hero-copy [data-intro] { animation: ui-in .75s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--i, 0) * 80ms + 140ms) } }
+@media (prefers-reduced-motion: no-preference) {
+  .topnav [data-intro] { animation: ui-in .75s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--i, 0) * 80ms + 140ms) }
+  /* Hero copy: soft fade-up with a staggered hold-through — each element rests
+     fully visible before the next begins (matches the 80ms×N + fire-time gap). */
+  .hero-copy [data-intro] { animation: fade-up .8s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--i, 0) * 160ms + 200ms) }
+}
 
 /* ==========================================================================
    Infinite marquee
