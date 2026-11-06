@@ -6,10 +6,12 @@
  * `--round`, `--pill` in globals.css); `.hero-sticker-*` only re-places them
  * and sizes them down for the tighter hero column.
  *
- * Each sticker is a bare positioning wrapper with the bob animation on the
- * inner element, so the drift never fights the wrapper's own offset. The bob
- * is CSS keyframes, which composes with the React-Spring `Float` wrapper and
- * GSAP parallax on ancestors; reduced-motion users get the static tilted set.
+ * Each sticker is a bare positioning wrapper around the shape itself, which
+ * keeps three transform owners from ever colliding: the wrapper takes the
+ * entry pop (`--i` staggers it) and ScrollFx's `.is-past` scroll-away state,
+ * the inner element takes the idle bob, and the `Float` wrapper and GSAP
+ * parallax above stay free to own their own transforms. Reduced-motion and
+ * no-JS visitors get the static tilted set in its resting position.
  */
 const STICKERS = [
   { key: 'peer', cls: 'burst', node: <span>Peer<br />Support</span> },
@@ -20,8 +22,8 @@ const STICKERS = [
 export function HeroStickers() {
   return (
     <>
-      {STICKERS.map(({ key, cls, node }) => (
-        <div key={key} className={`hero-sticker hero-sticker--${cls}`}>
+      {STICKERS.map(({ key, cls, node }, i) => (
+        <div key={key} className={`hero-sticker hero-sticker--${cls}`} style={{ '--i': i } as React.CSSProperties}>
           <div className={`sticker sticker--${cls}`}>{node}</div>
         </div>
       ))}

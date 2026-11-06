@@ -40,6 +40,11 @@ const stopAnime = (anim: { pause?: () => void; revert?: () => void }) => {
  *   (outBack) staggered across the page. Transform-only, so it can never flash
  *   content in from opacity 0 or fight CSS hover transforms.
  *
+ * IntersectionObserver:
+ * - `.hero-sticker` → slides out once `.hero` has scrolled behind the
+ *   viewport, and back in when it comes into view; see `.is-past` in
+ *   globals.css.
+ *
  * Under `prefers-reduced-motion` the whole module no-ops and content simply
  * renders in its final state.
  */
@@ -146,10 +151,34 @@ export function ScrollFx() {
       }) as unknown as { pause?: () => void; revert?: () => void }
     }
 
+    // ── Hero sticker scroll-away (IntersectionObserver) ────────────────────
+    // `.hero` is the first band, so the stickers are already on screen at load
+    // and CSS owns that entrance. All the observer has to decide is whether the
+    // hero is still ahead of / under the viewport or has scrolled past behind
+    // it — one class, `.is-past`, which globals.css fades and slides them out.
+    // Removing it on the way back up transitions them in again.
+    //
+    // It toggles classes only: no inline transform, so it can never fight the
+    // CSS bob on the inner sticker or the GSAP parallax on `.hero-art`.
+    const hero = document.querySelector<HTMLElement>('.hero')
+    const stickers = Array.from(document.querySelectorAll<HTMLElement>('.hero-sticker'))
+    let stickerIo: IntersectionObserver | null = null
+    if (hero && stickers.length) {
+      stickerIo = new IntersectionObserver(
+        ([entry]) => {
+          const behind = !entry.isIntersecting && entry.boundingClientRect.top < 0
+          for (const el of stickers) el.classList.toggle('is-past', behind)
+        },
+        { threshold: 0 },
+      )
+      stickerIo.observe(hero)
+    }
+
     return () => {
       window.removeEventListener('load', refresh)
       ctx.revert() // kills every tween + ScrollTrigger created above
       if (iconAnim) stopAnime(iconAnim)
+      stickerIo?.disconnect()
     }
   }, [pathname])
 
