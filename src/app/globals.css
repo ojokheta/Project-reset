@@ -417,9 +417,24 @@ h1 em { font-style: normal; color: var(--brand-lime) }
 @media (prefers-reduced-motion: reduce) { .mdock, .mdock__fab, .mdock__item { animation: none !important } .mdock, .mdock__chip, .mdock__icon, .mdock__item, .mdock__fab { transition-duration: .01ms !important } }
 
 /* ==========================================================================
-   Ambient fog backdrop (canvas, mounted in root layout)
+   Vanta birds backdrop (WebGL, mounted in root layout)
    ========================================================================== */
-.ambient { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none }
+.vanta-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none }
+.vanta-layer canvas { display: block }
+/* Armed by VantaBackground only once the flock has actually constructed, so no
+   JS, reduced motion, or a machine without WebGL leaves every band on the
+   opaque gradient it already has. */
+/* Green bands: same gradient, but translucent so the birds read as depth
+   behind the white copy instead of replacing the brand field. */
+html[data-vanta] .hero { background: linear-gradient(120deg, rgba(10, 77, 35, .88), rgba(21, 128, 61, .82)) }
+html[data-vanta] .inner-hero { background: linear-gradient(130deg, rgba(10, 77, 35, .88), rgba(21, 128, 61, .82)) }
+html[data-vanta] .site-footer { background: rgba(10, 77, 35, .9) }
+/* Light bands: the canvas is opaque and fills the viewport, so anything that
+   was leaning on the white root background has to paint itself now. The
+   `:nth-of-type(odd)` keeps each band's `--soft` striping rule in charge of
+   the even sections. */
+html[data-vanta] .info-section:nth-of-type(odd), html[data-vanta] .faq, html[data-vanta] .contact-layout, html[data-vanta] .marquee { background: var(--white) }
+/* Mission & Vision (.mv) is deliberately absent: it stays fully opaque. */
 
 /* ==========================================================================
    Desktop pill navigation
