@@ -50,6 +50,7 @@ export function MissionVision() {
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (window.matchMedia('(max-width: 760px)').matches) return
 
     gsap.registerPlugin(ScrollTrigger)
 

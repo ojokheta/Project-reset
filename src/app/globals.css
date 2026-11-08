@@ -527,3 +527,26 @@ html[data-vanta] .info-section:nth-of-type(odd), html[data-vanta] .faq, html[dat
 .mv-more { margin-top: 10px; display: inline-block }
 .mv-copy__body:not(.is-open) { max-height: 3.45em; overflow: hidden }
 .mv-copy__body.is-open { max-height: none }
+
+
+/* Collapsible info-section group cards (mobile-friendly, short by default) */
+.info-section--collapsible { align-items: start; }
+.info-group-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0; margin: 0 0 8px; background: none; border: 0; text-align: left; cursor: pointer; color: inherit; font: inherit; }
+.info-group-toggle .info-group { margin: 0; }
+.info-group-meta { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+.info-group-count { display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 8px; border-radius: 999px; background: rgba(163,230,53,.22); color: var(--brand-deep); font-size: 12px; font-weight: 800; }
+.info-group-chevron { font-size: 22px; line-height: 1; color: var(--brand); font-weight: 700; }
+.section-peek { justify-self: start; align-self: start; margin-top: 2px; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--brand-deep); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.section-peek:hover { border-color: rgba(21,128,61,.3); }
+.info-section--collapsible:not(.is-open) .section-intro { margin-bottom: 0; }
+.info-section--collapsible.is-open { padding-bottom: 70px; }
+@media (max-width: 760px) {
+  .info-section--collapsible { gap: 14px; padding-top: 34px; padding-bottom: 34px; }
+  .info-section--collapsible.is-open { padding-bottom: 44px; }
+  .info-section--collapsible .info-group { font-size: clamp(20px, 5.2vw, 26px); }
+  .section-peek { width: 100%; text-align: center; }
+  .mv-block { height: auto !important; min-height: 0; }
+  .mv-sticky { position: relative; height: auto; min-height: 0; padding: 56px 0; }
+  .mv-bg { opacity: .22; }
+  .mv-title { font-size: clamp(44px, 14vw, 64px); }
+}
