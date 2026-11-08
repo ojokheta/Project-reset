@@ -1,12 +1,11 @@
+'use client'
+
+import { useState } from 'react'
 import { GraduationCap, HandHeart, Shield, Users, type IconComponent } from 'reicon-react'
 
 /**
- * The four pillars, as four cards immediately below the hero — the first thing
- * a visitor sees after the headline, so the fold answers "what is this" before
- * the long-form bands start.
- *
- * Copy is drawn from the strategic pillars in the Purpose band, condensed to
- * one line each.
+ * The four pillars, as clickable cards immediately below the hero.
+ * Text is clamped to two lines; tapping reveals the full description.
  */
 const pillars: { icon: IconComponent; title: string; body: string }[] = [
   { icon: Shield, title: 'Prevention', body: 'Campus campaigns, hall and faculty visits and life-skills education that reach students before harmful use escalates.' },
@@ -16,15 +15,33 @@ const pillars: { icon: IconComponent; title: string; body: string }[] = [
 ]
 
 export function PillarCards() {
+  const [open, setOpen] = useState<string | null>(null)
   return (
     <section className="pillars" aria-label="Project RESET pillars">
-      {pillars.map(({ icon: Icon, title, body }) => (
-        <article className="pillar-card" key={title}>
-          <i><Icon size={22} strokeWidth={1.8} aria-hidden="true" /></i>
-          <h3>{title}</h3>
-          <p>{body}</p>
-        </article>
-      ))}
+      {pillars.map(({ icon: Icon, title, body }) => {
+        const isOpen = open === title
+        return (
+          <article
+            className={`pillar-card${isOpen ? ' is-open' : ''}`}
+            key={title}
+            onClick={() => setOpen(isOpen ? null : title)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                setOpen(isOpen ? null : title)
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-expanded={isOpen}
+          >
+            <i><Icon size={22} strokeWidth={1.8} aria-hidden="true" /></i>
+            <h3>{title}</h3>
+            <p className={isOpen ? undefined : 'line-clamp'} style={isOpen ? undefined : ({ WebkitLineClamp: 2 } as React.CSSProperties)}>{body}</p>
+            <span className="card-more-hint" aria-hidden="true">{isOpen ? 'Show less' : 'Tap for more'}</span>
+          </article>
+        )
+      })}
     </section>
   )
 }

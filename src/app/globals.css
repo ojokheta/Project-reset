@@ -510,3 +510,20 @@ html[data-vanta] .info-section:nth-of-type(odd), html[data-vanta] .faq, html[dat
   html { scroll-behavior: auto }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important }
 }
+
+
+/* Expand/collapse helpers */
+.line-clamp { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden }
+.expand-toggle { background: none; border: 0; padding: 0; margin: 0; font: inherit; font-weight: 700; font-size: 13px; color: var(--brand); cursor: pointer; text-decoration: underline; text-underline-offset: 2px }
+.expand-toggle:hover { color: var(--brand-deep) }
+.expand-toggle--light { color: var(--brand-lime) }
+.expand-toggle--light:hover { color: var(--white) }
+.card-more-hint { display: inline-block; margin-top: 6px; font-size: 12px; font-weight: 700; color: var(--brand); opacity: .85 }
+.pillar-card, .info-list article { cursor: pointer }
+.pillar-card.is-open, .info-list article.is-open { border-color: rgba(21, 128, 61, .35) }
+.info-list article:focus-visible, .pillar-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px }
+.info-list article p .line-clamp { display: -webkit-box }
+.inner-hero__lede .expand-toggle { margin-left: 4px }
+.mv-more { margin-top: 10px; display: inline-block }
+.mv-copy__body:not(.is-open) { max-height: 3.45em; overflow: hidden }
+.mv-copy__body.is-open { max-height: none }

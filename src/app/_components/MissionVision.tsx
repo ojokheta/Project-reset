@@ -1,21 +1,8 @@
 'use client'
 
-import { Fragment, useEffect, useRef } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-/**
- * Purpose page — Mission & Vision as two separate pinned sections.
- *
- * Each block is a tall (260vh) section with a sticky 100vh stage. Scrolling
- * scrubs a GSAP timeline: the oversized header rises into place and the
- * subtitle words unmask one by one (translateY inside overflow-hidden spans).
- *
- * Mission: header right · subtitle left. Vision swaps the two columns.
- *
- * Under `prefers-reduced-motion` the effect no-ops and everything renders in
- * its final state (the tween is a fromTo, so the DOM never starts hidden).
- */
 
 const BLOCKS = [
   {
@@ -38,26 +25,28 @@ const BLOCKS = [
   },
 ]
 
-/** Wrap each word in an overflow-hidden mask so it can rise up independently. */
-function MaskedWords({ text }: { text: string }) {
+function MaskedWords({ text, open }: { text: string; open: boolean }) {
   return (
-    <p className="mv-copy__body">
-      {text.split(' ').map((word, i) => (
-        <Fragment key={i}>
-          {i > 0 ? ' ' : ''}
-          <span className="mv-word">
-            <span className="mv-word__in" data-mv-word="">
-              {word}
+    <p className={`mv-copy__body${open ? ' is-open' : ''}`}>
+      <span className={open ? undefined : 'line-clamp'} style={open ? undefined : ({ WebkitLineClamp: 2 } as React.CSSProperties)}>
+        {text.split(' ').map((word, i) => (
+          <Fragment key={i}>
+            {i > 0 ? ' ' : ''}
+            <span className="mv-word">
+              <span className="mv-word__in" data-mv-word="">
+                {word}
+              </span>
             </span>
-          </span>
-        </Fragment>
-      ))}
+          </Fragment>
+        ))}
+      </span>
     </p>
   )
 }
 
 export function MissionVision() {
   const root = useRef<HTMLDivElement>(null)
+  const [open, setOpen] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -76,16 +65,10 @@ export function MissionVision() {
           .timeline({
             scrollTrigger: { trigger: block, start: 'top top', end: 'bottom bottom', scrub: 0.6 },
           })
-          // oversized header rises in from below
           .fromTo(title, { yPercent: 42, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.7, ease: 'none' }, 0)
-          // photo background fades in with the header, drifting gently into place
           .fromTo(bg, { autoAlpha: 0, scale: 1.08 }, { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'none' }, 0)
-          // subtitle words unmask one by one
           .fromTo(words, { yPercent: 115 }, { yPercent: 0, duration: 1, ease: 'none', stagger: 0.35 / words.length }, 0.25)
-          // kicker + heading follow
           .fromTo(meta, { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'none', stagger: 0.12 }, 0.35)
-          // photo background holds until the words have fully settled, then
-          // fades out only in the final stretch as the block releases its pin
           .to(bg, { autoAlpha: 0, duration: 0.25, ease: 'none' }, 1.35)
       })
     }, root)
@@ -107,7 +90,16 @@ export function MissionVision() {
                 <h3 className="mv-heading" data-mv-meta="">
                   {block.heading}
                 </h3>
-                <MaskedWords text={block.body} />
+                <MaskedWords text={block.body} open={!!open[block.id]} />
+                <button
+                  type="button"
+                  className="expand-toggle expand-toggle--light mv-more"
+                  data-mv-meta=""
+                  onClick={() => setOpen((s) => ({ ...s, [block.id]: !s[block.id] }))}
+                  aria-expanded={!!open[block.id]}
+                >
+                  {open[block.id] ? 'Less' : 'More'}
+                </button>
               </div>
               <h2 className="mv-title" data-mv-title="">
                 {block.title}
