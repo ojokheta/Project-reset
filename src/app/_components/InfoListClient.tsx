@@ -1,15 +1,15 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { InfoSectionData } from './InfoPage'
+
+function Body({ html }: { html: string }) {
+  return <span dangerouslySetInnerHTML={{ __html: html }} />
+}
 
 export function InfoListClient({ section }: { section: InfoSectionData }) {
   const [sectionOpen, setSectionOpen] = useState(false)
   const [open, setOpen] = useState<number | null>(null)
-
-  useEffect(() => {
-    if (window.matchMedia('(min-width: 761px)').matches) setSectionOpen(true)
-  }, [])
 
   return (
     <section className={`info-section info-section--collapsible${sectionOpen ? ' is-open' : ''}`} data-reveal="36">
@@ -63,7 +63,7 @@ export function InfoListClient({ section }: { section: InfoSectionData }) {
                 <h3>{item.title}</h3>
                 <p>
                   <span className={isOpen ? undefined : 'line-clamp'} style={isOpen ? undefined : ({ WebkitLineClamp: 2 } as React.CSSProperties)}>
-                    {item.body}
+                    <Body html={item.body} />
                   </span>
                 </p>
                 <span className="card-more-hint" aria-hidden="true">{isOpen ? 'Show less' : 'Tap for more'}</span>
